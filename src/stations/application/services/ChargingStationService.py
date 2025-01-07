@@ -1,6 +1,6 @@
-from domain.events.ChargingStationSearched import ChargingStationSearched
-from domain.events.ChargingStationAvailabilityChanged import ChargingStationAvailabilityChanged
-
+from src.stations.domain.events.ChargingStationSearched import ChargingStationSearched
+from src.stations.domain.events.ChargingStationAvailabilityChanged import ChargingStationAvailabilityChanged
+from src.stations.domain.value_objects.Availability import Availability
 class ChargingStationService:
     def __init__(self, repository):
         self.repository = repository  
@@ -33,10 +33,10 @@ class ChargingStationService:
         Updates the availability of a charging station and triggers an event.
 
         :param station_id: ID of the station to update
-        :param new_availability: New Availability object
+        :param new_availability: New Availability : 'available', 'unavailable', 'maintenance'
         """
         station = self.repository.find_by_id(station_id)
         if station:
             old_availability = station.availability
-            station.availability = new_availability
+            station.availability = Availability(new_availability)
             ChargingStationAvailabilityChanged(station_id, old_availability, new_availability).publish()

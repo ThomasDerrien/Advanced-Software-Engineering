@@ -1,18 +1,28 @@
-from domain.entities.ChargingStation import ChargingStation
-from domain.value_objects.Location import Location
-from domain.value_objects.PostalCode import PostalCode
-from domain.value_objects.Availability import Availability
+from src.stations.domain.entities.ChargingStation import ChargingStation
+from src.stations.domain.value_objects.Location import Location
+from src.stations.domain.value_objects.PostalCode import PostalCode
+from src.stations.domain.value_objects.Availability import Availability
 import pandas as pd
+
+
 class ChargingStationRepo:
     def __init__(self):
         self._stations = []  # Internal storage for ChargingStation objects
 
     def add(self, station):
         """
-        Adds a ChargingStation to the repository.
+        Adds a ChargingStation to the repository if there is no station at the same location.
 
         :param station: ChargingStation object to add
         """
+        # Check if a station with the same location already exists
+        for existing_station in self._stations:
+            if (existing_station.location.postal_code.code == station.location.postal_code.code and
+                    existing_station.location.latitude == station.location.latitude and
+                    existing_station.location.longitude == station.location.longitude):
+                raise ValueError("A ChargingStation already exists at this location.")
+
+        # If no existing station is found at the same location, add the new station
         self._stations.append(station)
 
     def remove(self, station_id):
@@ -60,25 +70,32 @@ class ChargingStationRepo:
         """
         return [station for station in self._stations if station.is_available]
 
-    def load_data_from_csv(self,csv_path):
-            # Load data from the data source (e.g., CSV file, database, etc.)
-            dataframe = pd.read_csv(csv_path,sep=";")
+    def load_data_from_csv(self, csv_path):
+        """
+        Loads ChargingStations from a CSV file.
 
-            # Convert to string
-            dataframe['Breitengrad']  = dataframe['Breitengrad'].astype(str)
-            dataframe['Längengrad']   = dataframe['Längengrad'].astype(str)
+        :param csv_path: Path to the CSV file to load
+        """
+        dataframe = pd.read_csv(csv_path, sep=";")
 
-            # Now replace the commas with periods
-            dataframe['Breitengrad']  = dataframe['Breitengrad'].str.replace(',', '.')
-            dataframe['Längengrad']   = dataframe['Längengrad'].str.replace(',', '.')
+        # Convert to string and replace commas with periods
+        dataframe['Breitengrad'] = dataframe['Breitengrad'].astype(str).str.replace(',', '.')
+        dataframe['Längengrad'] = dataframe['Längengrad'].astype(str).str.replace(',', '.')
+        dataframe['Nennleistung Ladeeinrichtung [kW]'] = dataframe['Nennleistung Ladeeinrichtung [kW]'].astype(str).str.replace(',','.')
 
-            dataframe                 = dataframe[(dataframe["Bundesland"] == 'Berlin') & 
-                                                    (dataframe["Postleitzahl"] > 10115) &  
-                                                       (dataframe["Postleitzahl"] < 14200)]
-            charging_stations = []
-            for idx, row in dataframe.iterrows():
-                postal_code = row['Postleitzahl']
-                location = Location(postal_code=postal_code,latitude=float(row['Breitengrad']), longitude=float(row['Längengrad']))
+
+        for idx, row in dataframe.iterrows():
+            try:
+                postal_code = int(row['Postleitzahl'])
+                print(postal_code)
+                # Try to create Location object with postal code, latitude, and longitude
+                location = Location(postal_code=postal_code, latitude=float(row['Breitengrad']),
+                                    longitude=float(row['Längengrad']))
                 availability = Availability("available")
-                charging_station = ChargingStation(id=len(self._stations), location=location, availability=availability, power=row['Nennleistung Ladeeinrichtung [kW]'])
-                self.add(charging_station)
+                charging_station = ChargingStation(id=len(self._stations), location=location, availability=availability,
+                                                   power=float(row['Nennleistung Ladeeinrichtung [kW]']))
+                self.add(charging_station)  # Add the charging station to the repository
+            except ValueError as e:
+                # If an error occurs (e.g., invalid postal code or other issue), log the error and skip the row
+                print(f"Skipping row {idx} due to error: {e}")
+                continue

@@ -1,8 +1,12 @@
+from src.stations.domain.events.DomainEvent import DomainEvent
 
-from DomainEvent import DomainEvent
 
 class ChargingStationAvailabilityChanged(DomainEvent):
     def __init__(self, station_id, old_availability, new_availability):
+        # Validate that old_availability and new_availability are boolean values
+        if old_availability is None or new_availability is None:
+            raise ValueError("Availability values cannot be None.")
+
         self.station_id = station_id
         self.old_availability = old_availability
         self.new_availability = new_availability
