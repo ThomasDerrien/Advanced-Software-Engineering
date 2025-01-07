@@ -1,4 +1,14 @@
-﻿Betreiber;Straße;Hausnummer;Adresszusatz;Postleitzahl;Ort;Bundesland;Kreis/kreisfreie Stadt;Breitengrad;Längengrad;Inbetriebnahmedatum;Nennleistung Ladeeinrichtung [kW];Art der Ladeeinrichung;Anzahl Ladepunkte;Steckertypen1;P1 [kW];Public Key1;Steckertypen2;P2 [kW];Public Key2;Steckertypen3;P3 [kW];Public Key3;Steckertypen4;P4 [kW];Public Key4
+﻿Ladesäulenregister Bundesnetzagentur;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+Hinweis: ;;;;;;;;;;;;;;;;;;;;;;;;;
+Die Liste beinhaltet die Ladeeinrichtungen aller Betreiberinnen und Betreiber, die das Anzeigeverfahren der Bundesnetzagentur ;;;;;;;;;;;;;;;;;;;;;;;;;
+zum Zeitpunkt der Aktualisierung vollständig abgeschlossen haben. ;;;;;;;;;;;;;;;;;;;;;;;;;
+Die Zahl der öffentlich zugänglichen Ladeeinrichtungen in Deutschland ist daher größer als hier dargestellt. ;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+Letzte Aktualisierung vom: 16.07.2024;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+Allgemeine Informationen;;;;;;;;;;;;;;1. Ladepunkt;;;2. Ladepunkt;;;3. Ladepunkt;;;4. Ladepunkt;;
+Betreiber;Straße;Hausnummer;Adresszusatz;Postleitzahl;Ort;Bundesland;Kreis/kreisfreie Stadt;Breitengrad;Längengrad;Inbetriebnahmedatum;Nennleistung Ladeeinrichtung [kW];Art der Ladeeinrichung;Anzahl Ladepunkte;Steckertypen1;P1 [kW];Public Key1;Steckertypen2;P2 [kW];Public Key2;Steckertypen3;P3 [kW];Public Key3;Steckertypen4;P4 [kW];Public Key4
 Albwerk GmbH & Co. KG;Ennabeurer Weg;0;;72535;Heroldstatt;Baden-Württemberg;Landkreis Alb-Donau-Kreis;48,442398;9,659075;11.01.2020;22;Normalladeeinrichtung;2;AC Steckdose Typ 2;22;;AC Steckdose Typ 2;22;;;;;;;
 smopi;Albstraße;14;;72535;Heroldstatt;Baden-Württemberg;Landkreis Alb-Donau-Kreis;48,449353;9,672201;23.11.2022;22;Normalladeeinrichtung;4;AC Steckdose Typ 2;22;;AC Steckdose Typ 2;22;;AC Steckdose Typ 2;22;;AC Steckdose Typ 2;22;
 Albwerk GmbH & Co. KG;Parkplatz Campingplatz;0;;72589;Westerheim;Baden-Württemberg;Landkreis Alb-Donau-Kreis;48,5105;9,609;07.01.2019;22;Normalladeeinrichtung;2;AC Steckdose Typ 2;22;;AC Steckdose Typ 2;22;;;;;;;

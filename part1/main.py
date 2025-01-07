@@ -36,7 +36,7 @@ def main():
 
     
 # -----------------------------------------------------------------------------------------------------------------------
-    m1.make_streamlit_electric_Charging_resid(gdf_lstat3,gdf_residents2)
+    m1.make_streamlit_electric_Charging_Stations_Map_with_Search_and_Clustering(df_lstat2)
 
 
 if __name__ == "__main__": 
