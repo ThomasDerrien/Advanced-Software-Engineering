@@ -1,7 +1,6 @@
 import unittest
 from src.stations.domain.entities.ChargingStation import ChargingStation
 from src.stations.domain.value_objects.Location import Location
-from src.stations.domain.value_objects.PostalCode import PostalCode
 from src.stations.domain.value_objects.Availability import Availability
 from src.stations.infrastructure.repositories.ChargingStationRepo import ChargingStationRepo
 import pandas as pd
@@ -18,8 +17,8 @@ class TestChargingStationRepo(unittest.TestCase):
         location2 = Location(postal_code='14199', latitude=52.5000, longitude=13.4000)
         availability1 = Availability("available")
         availability2 = Availability("unavailable")
-        station1 = ChargingStation(id=1, location=location1, availability=availability1, power=50.0)
-        station2 = ChargingStation(id=2, location=location2, availability=availability2, power=100.0)
+        station1 = ChargingStation(id=1, location=location1, availability=availability1, power=50.0,name="station1")
+        station2 = ChargingStation(id=2, location=location2, availability=availability2, power=100.0,name="station2")
 
         self.repo.add(station1)
         self.repo.add(station2)
@@ -28,7 +27,7 @@ class TestChargingStationRepo(unittest.TestCase):
         # Test adding a ChargingStation
         location = Location(postal_code='10115', latitude=52.5300, longitude=13.5050)
         availability = Availability("available")
-        new_station = ChargingStation(id=3, location=location, availability=availability, power=75.0)
+        new_station = ChargingStation(id=3, location=location, availability=availability, power=75.0,name="station3")
 
         self.repo.add(new_station)
         self.assertEqual(len(self.repo.find_all()), 3)  # Should have 3 stations
@@ -45,8 +44,8 @@ class TestChargingStationRepo(unittest.TestCase):
         self.assertEqual(station.id, 1)
 
         # Test finding a non-existent station
-        station = self.repo.find_by_id(999)
-        self.assertIsNone(station)
+        with self.assertRaises(ValueError):
+            self.repo.find_by_id(999)
 
     def test_find_by_postal_code(self):
         # Test finding ChargingStations by postal code
@@ -73,7 +72,11 @@ class TestChargingStationRepo(unittest.TestCase):
             'Breitengrad': [52.00, 53.000],
             'Längengrad': [13.0, 17.000],
             'Nennleistung Ladeeinrichtung [kW]': [50.0, 100.0],
-            'Bundesland': ['Berlin', 'Berlin']
+            'Bundesland': ['Berlin', 'Berlin'],
+            'Betreiber': ['Betreiber1', 'Betreiber2'],
+            'Straße': ['Musterstrasse', 'Beispielweg'],
+            'Hausnummer': ['10', '20'],
+            'Adresszusatz': ['Ecke A', 'Nähe Bahnhof']
         }
         mock_df = pd.DataFrame(mock_data)
         mock_read_csv.return_value = mock_df
@@ -88,7 +91,7 @@ class TestChargingStationRepo(unittest.TestCase):
         # Test adding a ChargingStation at a location where one already exists
         location = Location(postal_code='10115', latitude=52.5200, longitude=13.4050)
         availability = Availability("available")
-        new_station = ChargingStation(id=3, location=location, availability=availability, power=75.0)
+        new_station = ChargingStation(id=3, location=location, availability=availability, power=75.0,name="station3")
 
         # Try adding the station at an existing location
         with self.assertRaises(ValueError) as context:

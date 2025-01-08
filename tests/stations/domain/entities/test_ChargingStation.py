@@ -13,12 +13,13 @@ class TestChargingStation(unittest.TestCase):
         # Valid initialization test (already covered)
         station = ChargingStation(
             id=0,
-            location=Location('13089', 53.0, 12.5),
+            location=Location(13089, 53.0, 12.5),
             availability=Availability("available"),
-            power=50.0
+            power=50.0,
+            name="Charging Station"
         )
         self.assertEqual(station.id, 0)
-        self.assertEqual(station.location.postal_code.code, '13089')
+        self.assertEqual(station.location.postal_code.code, 13089)
         self.assertEqual(station.location.latitude, 53.0)
         self.assertEqual(station.location.longitude, 12.5)
         self.assertEqual(station.power, 50)
@@ -28,9 +29,11 @@ class TestChargingStation(unittest.TestCase):
         with self.assertRaises(ValueError):
             ChargingStation(
                 id=-1,
-                location=Location('13089', 53.0, 12.5),
+                location=Location(13089, 53.0, 12.5),
                 availability=Availability("available"),
-                power=50.0
+                power=50.0,
+                name="Charging Station"
+
             )
 
     def test_zero_power(self):
@@ -38,9 +41,11 @@ class TestChargingStation(unittest.TestCase):
         with self.assertRaises(ValueError):
             ChargingStation(
                 id=2,
-                location=Location('13089', 53.0, 12.5),
+                location=Location(13089, 53.0, 12.5),
                 availability=Availability("available"),
-                power=0.0
+                power=0.0,
+                name="Charging Station"
+
             )
 
     def test_negative_power(self):
@@ -48,9 +53,11 @@ class TestChargingStation(unittest.TestCase):
         with self.assertRaises(ValueError):
             ChargingStation(
                 id=3,
-                location=Location('13089', 53.0, 12.5),
+                location=Location(13089, 53.0, 12.5),
                 availability=Availability("available"),
-                power=-10
+                power=-10,
+                name="Charging Station"
+
             )
 
 

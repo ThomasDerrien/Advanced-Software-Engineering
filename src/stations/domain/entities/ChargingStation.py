@@ -2,7 +2,7 @@ from src.stations.domain.value_objects.Location import Location
 
 from src.stations.domain.value_objects.Availability import Availability
 class ChargingStation:
-    def __init__(self, id, location, availability, power):
+    def __init__(self, id, location, availability, power,name):
         if not isinstance(id, int) or id < 0:
             raise ValueError("ID must be a non-negative integer.")
         self.id = id
@@ -15,6 +15,9 @@ class ChargingStation:
         if not isinstance(power, float) or power <= 0:
             raise ValueError("Power must be a positive integer.")
         self.power = power
+        if not isinstance(name, str):
+            raise ValueError("Name must be a string.")
+        self.name = name
 
     @property
     def is_available(self)->bool:

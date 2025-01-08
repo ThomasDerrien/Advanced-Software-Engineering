@@ -15,7 +15,7 @@ class TestChargingStationService(unittest.TestCase):
 
     def test_find_by_postal_code(self):
         # Arrange
-        postal_code = "13089"
+        postal_code = 13089
         station_ids = [1570, 1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579]
 
         # Act

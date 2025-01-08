@@ -43,7 +43,7 @@ class ChargingStationRepo:
         for station in self._stations:
             if station.id == station_id:
                 return station
-        return None
+        raise ValueError(f"Charging station with ID {station_id} does not exist.")
 
     def find_all(self):
         """
@@ -60,7 +60,7 @@ class ChargingStationRepo:
         :param postal_code: Postal code to filter stations by
         :return: List of ChargingStation objects
         """
-        return [station for station in self._stations if postal_code in str(station.location.postal_code.code)]
+        return [station for station in self._stations if str(postal_code) in str(station.location.postal_code.code)]
 
     def find_available(self):
         """
@@ -90,9 +90,10 @@ class ChargingStationRepo:
                 # Try to create Location object with postal code, latitude, and longitude
                 location = Location(postal_code=postal_code, latitude=float(row['Breitengrad']),
                                     longitude=float(row['Längengrad']))
+                name = str(row['Betreiber']) +" "+ str(row['Straße']) +" "+ str(row['Hausnummer']) + " loc : (" +str(location.longitude) +","+ str(location.latitude) + ")"
                 availability = Availability("available")
                 charging_station = ChargingStation(id=len(self._stations), location=location, availability=availability,
-                                                   power=float(row['Nennleistung Ladeeinrichtung [kW]']))
+                                                   power=float(row['Nennleistung Ladeeinrichtung [kW]']),name=name)
                 self.add(charging_station)  # Add the charging station to the repository
             except ValueError as e:
                 # If an error occurs (e.g., invalid postal code or other issue), log the error and skip the row
