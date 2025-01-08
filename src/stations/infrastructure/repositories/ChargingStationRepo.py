@@ -87,7 +87,6 @@ class ChargingStationRepo:
         for idx, row in dataframe.iterrows():
             try:
                 postal_code = int(row['Postleitzahl'])
-                print(postal_code)
                 # Try to create Location object with postal code, latitude, and longitude
                 location = Location(postal_code=postal_code, latitude=float(row['Breitengrad']),
                                     longitude=float(row['Längengrad']))

@@ -1,7 +1,7 @@
 class PostalCode:
     def __init__(self, code):
         if not self._validate_postal_code(code):
-            raise ValueError("Invalid postal code format.")
+            raise ValueError(f"Invalid postal code format : {code} ")
         self.code = code
 
     def _validate_postal_code(self, code):
