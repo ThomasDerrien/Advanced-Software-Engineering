@@ -3,6 +3,8 @@
 #       export PYTHONPATH=:PYTHONPATH:(location of project)/Advanced-Software-Engineering (linux)
 #       set PYTHONPATH=%PYTHONPATH%;(location of project)\Advanced-Software-Engineering  (windows cmd)
 #       $env:PYTHONPATH="$env:PYTHONPATH;(location of project)\Advanced-Software-Engineering" (windows powershell)
+#      
+#       Run this file from the root of the project : streamlit run src/presentation/main.py
 ################################################################################################
 import streamlit as st
 import folium
