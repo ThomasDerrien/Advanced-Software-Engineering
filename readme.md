@@ -2,6 +2,8 @@
 
 to run : 
 create a venv with the requirement file
+
+
 in src/presentation/main.py :
 replace the PROJECT_LOC variable.
 
